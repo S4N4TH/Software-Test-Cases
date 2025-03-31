@@ -1,0 +1,41 @@
+{% load static %}
+<div class="account-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <img src="{% static 'images/image1.png' %}" width="100%">
+                </div>
+                <div class="col-2">
+                    <div class="form-container">
+                        <div class="form-btn">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'error' %}
+                                        <p style="color: red">{{ message }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <span onclick="login()">Login</span>
+                            <span onclick="register()">Register</span>
+                            <hr id="Indicator">
+                        </div>
+                        <form id="LoginForm" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" name="username" minlength="6" maxlength="10" required placeholder="Username">
+                            <input type="password" id="password" name="password" minlength="8" maxlength="12" required placeholder="Password">
+                            <button type="submit" name="login" class="btn">Login</button>
+                            <a href="">Forget Password</a>
+                        </form>
+
+                        <form id="RegForm" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" name="username" minlength="6" maxlength="10" required placeholder="Username">
+                            <input type="email" name="email" required placeholder="Email">
+                            <input type="password" id="password" name="password" minlength="8" maxlength="12" required placeholder="Password">
+                            <button type="submit" name="register" id="registerButton" class="btn">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

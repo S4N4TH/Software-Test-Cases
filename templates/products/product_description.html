@@ -1,0 +1,26 @@
+{% load discount_calc %}
+
+<div class="small-container single-product">
+        <div class="row">
+            <div class="col-4">
+                <img src="{{product.cover_image.url}}" width="100%" id="ProductImg">
+            </div>
+            <div class="col-6">
+                <h1>{{ product.title }}</h1>
+                <h4>{{ product.description }}</h4>
+                <del>Rs. {{ product.price }}</del>
+                <h3>Rs. {% calc_discount product.price product.discount %}</h3>
+                <h5>Qty. {{ product.available_quantity }}</h5>
+                <form method="post" action="{% url 'add_to_cart' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ product.id }}" name="product_id">
+                    <input type="number" name="quantity" value="1">
+                    <button type="submit" class="btn">Add To Cart</button>    
+                </form>
+                <h3>Product Details <i class="fa fa-indent"></i></h3>
+                <br>
+                <p>Give your summer wardrobe a style upgrade with the HRX Men's Active T-Shirt. Team it with a pair of
+                    shorts for your morning workout or a denims for an evening out with the guys.</p>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,41 @@
+{% load get_status %}
+{% load payment_status %}
+
+{% if all_orders %}
+    <div class="small-container cart-page">
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            {% for order in all_orders %}
+            <tr>
+                <td> <p>ODR000{{ order.id }}</p> </td>
+                <td>{{ order.created_at | date:'d M Y' }}</td>
+                <td><div>{{ order.total_price }}</div><div>{% get_payment_status order.pay_status %}</div></td>
+                <td>{% get_order_status order.order_stage %}</td>
+                <td><a class="btn" href="{% url 'order_details' order.id %}">View</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    
+    
+        <div class="page-btn" style="align-items: center">
+                {% if all_orders.has_previous %}
+                    <a href="?page={{ all_orders.previous_page_number }}"><span><<<</span></a>
+                {% endif %}
+                {% for i in all_orders.paginator.page_range %}
+                    <a href="?page={{ i }}"><span>{{ i }}</span></a>
+                {% endfor %}
+                {% if all_orders.has_next %}
+                    <a href="?page={{ all_orders.next_page_number }}"><span>>>></span></a>
+                {% endif %}
+        </div>
+    </div>
+{% else %}
+    <h1>No orders</h1>
+{% endif %}
+
